@@ -842,7 +842,9 @@ section2:AddToggle({
 	Callback = function(state)
 		k = state 
 		while k do 
-			if not game.Players.LocalPlayer.Character:GetAttribute("SummonedStand") then
+			if not k or (disablewhenfarm and not farming) then
+				if not k then break end
+			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
 			end
 			task.wait()
