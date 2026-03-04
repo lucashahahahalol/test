@@ -115,7 +115,7 @@ local subs = lib.subs
 local libclose = subs.Wait
 
 local window = lib:CreateWindow({
-	Name = "Zyrc Hub",
+	Name = "Z4K IS A SKID",
 	Themeable = {
 		Info = {"KONTOL"},
 		Credit = false, 
