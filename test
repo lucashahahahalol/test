@@ -465,7 +465,7 @@ getStand()
 game:GetService("Players").LocalPlayer.PlayerData.SlotData.Stand.Changed:Connect(function()
 	getStand()
 end)
-
+local AutoSsRolling = false
 for i,v in pairs(game:GetService("ReplicatedStorage").assets.models.stands:GetChildren()) do
 	if v.Name == "Skins" then
 
@@ -511,8 +511,13 @@ section11:AddToggle({
 				:WaitForChild("character")
 				:WaitForChild("use_item")
 				:FireServer("Stand Arrow")
+			
+			local stats = {}
+			if tonumber(stand.Strength) and stand.Strength >= 4 and AutoSsRolling then table.insert(stats, true) end
+			if tonumber(stand.Speed) and stand.Speed >= 4 and AutoSsRolling then table.insert(stats, true) end
+			if tonumber(stand.Specialty) and stand.Specialty >= 4 and AutoSsRolling then table.insert(stats, true) end
 
-			if stand.Name == SelectStand or stand.Skin == SelectSkin then
+			if stand.Name == SelectStand or stand.Skin == SelectSkin or #stats >= 2 then
 				AutoRolling = false
 				library.flags.AutoRollStandArrow = false -- force UI off
 				break
@@ -520,6 +525,15 @@ section11:AddToggle({
 
 			task.wait()
 		end
+	end
+})
+
+section11:AddToggle({
+	Name = "Auto Stop at SS or SSS",
+	Value = false,
+	Flag = "fdgfdgdgd",
+	Callback = function(state)
+		AutoSsRolling = state
 	end
 })
 
