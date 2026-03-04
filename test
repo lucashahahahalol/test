@@ -734,23 +734,40 @@ section4:AddSlider({
 -- ══════════════════════════════════════════
 local function makeAutoSell(rarity, flag)
 	section7:AddToggle({
-		Name = "Auto Sell [" .. rarity .. "]", Value = false, Flag = flag,
+		Name = "Auto Sell [" .. rarity .. "]",
+		Value = false,
+		Flag = flag,
 		Callback = function(state)
-			l = state 
-			while l do 
-				local CurrentInventory = game:GetService("HttpService"):JSONDecode(
-					game:GetService("Players").LocalPlayer.PlayerData.SlotData.Inventory.Value)
-				for _, Item in pairs(CurrentInventory) do
-					if not l then break end
-					if Data[Item.Name] and Data[Item.Name].Rarity == rarity then
-						game:GetService("ReplicatedStorage").requests.general:WaitForChild("SellItem"):FireServer({
-							{ ID = Item.ID, Pips = Item.Pips, Name = Item.Name, duplicates = 1 }
-						})
+			task.spawn(function()
+				local active = state
+				while active do
+					-- refresh inventory each iteration
+					local success, CurrentInventory = pcall(function()
+						return game:GetService("HttpService"):JSONDecode(game.Players.LocalPlayer.PlayerData.SlotData.Inventory.Value)
+					end)
+					if not success or type(CurrentInventory) ~= "table" then
+						warn("Failed to read inventory")
+						task.wait(1)
+						continue
 					end
-					task.wait(Selectedtime)
+
+					for _, Item in pairs(CurrentInventory) do
+						if not active then break end -- stop if toggle is off
+						if Data[Item.Name] and Data[Item.Name].Rarity == rarity then
+							local success2, err = pcall(function()
+								game:GetService("ReplicatedStorage").requests.general.SellItem:FireServer({
+									{ ID = Item.ID, Pips = Item.Pips, Name = Item.Name, duplicates = 1 }
+								})
+							end)
+							if not success2 then warn("Failed to sell item:", err) end
+							task.wait(Selectedtime or 0.05) -- small delay
+						end
+					end
+
+					task.wait(0.1) -- yield to prevent freezing
+					active = library.flags[flag] -- update in case user toggled off
 				end
-			end
-			task.wait()
+			end)
 		end
 	})
 end
