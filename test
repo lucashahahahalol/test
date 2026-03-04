@@ -861,7 +861,10 @@ section2:AddToggle({
 			if not k or (disablewhenfarm and not farming) then
 				
 			else
-				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
+				 if not game.Players.LocalPlayer.Character:GetAttribute("SummonedStand") then
+                game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
+            end
+
 			end
 			task.wait()
 		end 
