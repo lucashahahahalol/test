@@ -296,6 +296,11 @@ task.spawn(function()
 end)
 
 local ItemList = {}
+local ItemList2 = {}
+
+for itemName, _ in pairs(ItemData) do
+	table.insert(ItemList2, itemName)
+end
 
 task.spawn(function()
 	for i,v in pairs(ItemData) do
@@ -548,7 +553,7 @@ section11:AddToggle({
 section9:AddDropdown({
 	Name = "Item",
 	Nothing = "Select Item..",
-	List = ItemList,
+	List = ItemList2,
 	Flag = "dfghdfg",
 	Callback = function(selected)
 		Item = selected
