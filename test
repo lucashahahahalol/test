@@ -761,7 +761,7 @@ local function makeAutoSell(rarity, flag)
 						if (Data[Item.Name] and Data[Item.Name].Rarity == rarity or ItemList[Item.Name] and ItemList[Item.Name].Rarity == rarity) then
 							local success2, err = pcall(function()
 								game:GetService("ReplicatedStorage").requests.general.SellItem:FireServer({
-									{ ID = Item.ID, Pips = Item.Pips, Name = Item.Name, duplicates = 1 }
+									{ ID = Item.ID, Pips = Item.Pips, Name = Item.Name, duplicates = (Item.Amount or 1) }
 								})
 							end)
 							if not success2 then warn("Failed to sell item:", err) end
