@@ -47,14 +47,17 @@ end
 
 repeat wait() until game:IsLoaded() 
 
-if game.PlaceId == 74747090658891 then
-
+local function MainMenuPress()
 	SkillBind(Enum.KeyCode.BackSlash)
 	task.wait(0.2)
 	SkillBind(Enum.KeyCode.Return)
 	task.wait(0.2)
 	SkillBind(Enum.KeyCode.BackSlash)
+end
 
+if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main Menu") then
+	wait(0.3)
+	MainMenuPress()
 end
 
 local MAX_DISTANCE = math.huge 
