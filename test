@@ -453,10 +453,11 @@ function getStand()
 		Skin:Set("Skin: None" )
 
 	end
+	
 	Trait:Set("Trait: " .. tostring(newstand.Trait))
-	Speed:Set("Speed : " .. tostring(tbh[newstand.Speed]))
-	Speciality:Set("Speciality : " .. tostring(tbh[newstand.Specialty]))
-	Strength:Set("Strength : " .. tostring(tbh[newstand.Strength]))
+	Speed:Set("Speed : " .. newstand.Speed .. " (" .. tostring(tbh[newstand.Speed]) .. ")")
+	Speciality:Set("Speciality : " .. newstand.Specialty .. " (" .. tostring(tbh[newstand.Specialty]) .. ")")
+	Strength:Set("Strength : " .. newstand.Strength .. " (" .. tostring(tbh[newstand.Strength]) .. ")")
 
 	return newstand
 end
