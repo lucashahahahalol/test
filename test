@@ -860,7 +860,7 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				if not k then break end
+				
 			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
 			end
@@ -876,7 +876,7 @@ local function makeAutoSkill(skillName, flag, key)
 			k = state 
 			while k do 
 				if not k or (disablewhenfarm and not farming) then
-					if not k then break end
+					
 				else
 					game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(key, true)
 				end
@@ -892,7 +892,7 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				if not k then break end
+				
 			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true, false)
 			end
@@ -907,7 +907,7 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				if not k then break end
+				
 			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("M2"):FireServer(true, false)
 			end
