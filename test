@@ -45,8 +45,6 @@ local function SkillBind(bind)
 	end)
 end
 
-repeat wait() until game:IsLoaded() 
-
 local function MainMenuPress()
 	SkillBind(Enum.KeyCode.BackSlash)
 	task.wait(0.2)
@@ -59,6 +57,8 @@ if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main Menu") then
 	wait(0.3)
 	MainMenuPress()
 end
+
+repeat wait() until game:IsLoaded() 
 
 local MAX_DISTANCE = math.huge 
 
