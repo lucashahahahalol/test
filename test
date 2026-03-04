@@ -297,9 +297,14 @@ end)
 
 local ItemList = {}
 
-for itemName, _ in pairs(ItemData) do
-	table.insert(ItemList, itemName)
-end
+task.spawn(function()
+	for i,v in pairs(ItemData) do
+		ItemList[tostring(i)] = {}
+		for x,f in pairs(v) do
+			ItemList[tostring(i)][x] = f
+		end
+	end
+end)
 
 -- ══════════════════════════════════════════
 --         STATE VARS
@@ -511,7 +516,7 @@ section11:AddToggle({
 				:WaitForChild("character")
 				:WaitForChild("use_item")
 				:FireServer("Stand Arrow")
-			
+
 			local stats = {}
 			if tonumber(stand.Strength) and stand.Strength >= 4 and AutoSsRolling then table.insert(stats, true) end
 			if tonumber(stand.Speed) and stand.Speed >= 4 and AutoSsRolling then table.insert(stats, true) end
@@ -577,7 +582,7 @@ section9:AddToggle({
 
 	Callback = function(state)
 		l = state
-		
+
 		while l do
 			for _, item in ipairs(game.Players.LocalPlayer.PlayerGui:WaitForChild("Cash Shop"):WaitForChild("cash_shop"):WaitForChild("holder"):WaitForChild("goods_list"):WaitForChild("ScrollingFrame"):WaitForChild("holder"):GetChildren()) do
 				checkItem(item)
@@ -737,9 +742,10 @@ local function makeAutoSell(rarity, flag)
 		Value = false,
 		Flag = flag,
 		Callback = function(state)
+			local active = state
 			task.spawn(function()
-				local active = state
 				while active do
+					if not active then break end -- stop if toggle is off
 					-- refresh inventory each iteration
 					local success, CurrentInventory = pcall(function()
 						return game:GetService("HttpService"):JSONDecode(game.Players.LocalPlayer.PlayerData.SlotData.Inventory.Value)
@@ -752,7 +758,7 @@ local function makeAutoSell(rarity, flag)
 
 					for _, Item in pairs(CurrentInventory) do
 						if not active then break end -- stop if toggle is off
-						if Data[Item.Name] and Data[Item.Name].Rarity == rarity then
+						if (Data[Item.Name] and Data[Item.Name].Rarity == rarity or ItemList[Item.Name] and ItemList[Item.Name].Rarity == rarity) then
 							local success2, err = pcall(function()
 								game:GetService("ReplicatedStorage").requests.general.SellItem:FireServer({
 									{ ID = Item.ID, Pips = Item.Pips, Name = Item.Name, duplicates = 1 }
@@ -764,7 +770,6 @@ local function makeAutoSell(rarity, flag)
 					end
 
 					task.wait(0.1) -- yield to prevent freezing
-					active = library.flags[flag] -- update in case user toggled off
 				end
 			end)
 		end
@@ -859,11 +864,11 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				
+
 			else
-				 if not game.Players.LocalPlayer.Character:GetAttribute("SummonedStand") then
-                game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
-            end
+				if not game.Players.LocalPlayer.Character:GetAttribute("SummonedStand") then
+					game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("SummonStand"):FireServer()
+				end
 
 			end
 			task.wait()
@@ -878,7 +883,7 @@ local function makeAutoSkill(skillName, flag, key)
 			k = state 
 			while k do 
 				if not k or (disablewhenfarm and not farming) then
-					
+
 				else
 					game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("Skill"):FireServer(key, true)
 				end
@@ -894,7 +899,7 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				
+
 			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("M1"):FireServer(true, false)
 			end
@@ -909,7 +914,7 @@ section2:AddToggle({
 		k = state 
 		while k do 
 			if not k or (disablewhenfarm and not farming) then
-				
+
 			else
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("client_character_controller"):WaitForChild("M2"):FireServer(true, false)
 			end
