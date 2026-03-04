@@ -519,7 +519,6 @@ section11:AddToggle({
 
 			if stand.Name == SelectStand or stand.Skin == SelectSkin or #stats >= 2 then
 				AutoRolling = false
-				library.flags.AutoRollStandArrow = false -- force UI off
 				break
 			end
 
