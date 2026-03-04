@@ -455,9 +455,9 @@ function getStand()
 	end
 
 	Trait.Text = "Trait: " .. tostring(newstand.Trait)
-	Speed.Text = "Speed: " .. tostring(newstand.Speed) .. " (" .. tostring(tbh[newstand.Speed]) .. ")"
-	Speciality.Text = "Speciality: " .. tostring(newstand.Specialty) .. " (" .. tostring(tbh[newstand.Specialty]) .. ")"
-	Strength.Text = "Strength: " .. tostring(newstand.Strength) .. " (" .. tostring(tbh[newstand.Strength]) .. ")"
+	Speed.Text = "Speed: " .. newstand.Speed .. " (" .. (tbh[newstand.Speed] or "N/A") .. ")"
+	Speciality.Text = "Speciality: " .. newstand.Specialty .. " (" .. tbh[newstand.Specialty] .. ")"
+	Strength.Text = "Strength: " .. newstand.Strength .. " (" .. tbh[newstand.Strength] .. ")"
 
 	return newstand
 end
