@@ -455,9 +455,9 @@ function getStand()
 	end
 	
 	Trait:Set("Trait: " .. tostring(newstand.Trait))
-	Speed:Set("Speed : " .. newstand.Speed .. " (" .. tostring(tbh[newstand.Speed]) .. ")")
-	Speciality:Set("Speciality : " .. newstand.Specialty .. " (" .. tostring(tbh[newstand.Specialty]) .. ")")
-	Strength:Set("Strength : " .. newstand.Strength .. " (" .. tostring(tbh[newstand.Strength]) .. ")")
+	Speed:Set("Speed : " .. newstand.Speed .. " (" .. tostring(tbh[newstand.Speed]) ")")
+	Speciality:Set("Speciality : " .. newstand.Specialty .. " (" .. tostring(tbh[newstand.Specialty]) ")")
+	Strength:Set("Strength : " .. newstand.Strength .. " (" .. tostring(tbh[newstand.Strength]) ")")
 
 	return newstand
 end
