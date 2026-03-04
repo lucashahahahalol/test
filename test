@@ -443,20 +443,21 @@ local SkinTable = {}
 -- {"Name":"Anubis","ID":"00098989-20ed-4bd5-81c7-dbd2a7e910df","Speed":3,"Strength":5,"Trait":"Determined","Specialty":5}
 function getStand()
 
-	local newstand = HttpService:JSONDecode(game:GetService("Players").LocalPlayer.PlayerData.SlotData.Stand.Value)
+	local newstand = game:GetService("HttpService"):JSONDecode(game.Players.LocalPlayer.PlayerData.SlotData.Stand.Value)
 
-	Name:Set("Name: " .. tostring(newstand.Name))
+	Name.Text = "Name: " .. tostring(newstand.Name)
+
 	if newstand["Skin"] then
-		Skin:Set("Skin: ".. tostring(newstand.Skin) )
+		Skin.Text = "Skin: ".. tostring(newstand.Skin)
 	else
 		newstand.Skin = nil
-		Skin:Set("Skin: None" )
-
+		Skin.Text = "Skin: None"
 	end
-	Trait:Set("Trait: " .. tostring(newstand.Trait))
-	Speed:Set("Speed : " .. tostring(newstand.Speed) .. " (" .. tostring(tbh[newstand.Speed]) .. ")")
-	Speciality:Set("Speciality : " .. tostring(newstand.Specialty) .. " (" .. tostring(tbh[newstand.Specialty]) .. ")")
-	Strength:Set("Strength : " .. tostring(newstand.Strength) .. " (" .. tostring(tbh[newstand.Strength]) .. ")")
+
+	Trait.Text = "Trait: " .. tostring(newstand.Trait)
+	Speed.Text = "Speed: " .. tostring(newstand.Speed) .. " (" .. tostring(tbh[newstand.Speed]) .. ")"
+	Speciality.Text = "Speciality: " .. tostring(newstand.Specialty) .. " (" .. tostring(tbh[newstand.Specialty]) .. ")"
+	Strength.Text = "Strength: " .. tostring(newstand.Strength) .. " (" .. tostring(tbh[newstand.Strength]) .. ")"
 
 	return newstand
 end
@@ -1212,5 +1213,3 @@ print('loaded')
 for i,v in pairs(getconnections(Player.Idled)) do 
 	v:Disable()
 end
-
-
